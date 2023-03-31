@@ -14,9 +14,6 @@ jobs:
   build-export:
     name: Build and export heorot Docker
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./api
 
     steps:
       - uses: actions/checkout@v3
@@ -40,6 +37,7 @@ jobs:
           tags: squarefactory/heorot:v1.4.1
           cache-from: type=gha
           cache-to: type=gha, mode=max
+          working-directory: ./api
 
       - name: Login to Github Container Registry
         if: startsWith(github.ref, 'refs/tags')
@@ -63,3 +61,4 @@ jobs:
             ghcr.ghcr.io/squarefactory/heorot:${{steps.get_version.outputs.VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          working-directory: ./api

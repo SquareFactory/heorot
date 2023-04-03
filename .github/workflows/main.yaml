@@ -31,13 +31,12 @@ jobs:
         uses: docker/build-push-action@v4
         if: ${{ !startsWith(github.ref, 'refs/tags') }}
         with:
-          file: Dockerfile
+          file: api/Dockerfile
           platforms: linux/amd64
           push: false
           tags: squarefactory/heorot:v1.4.1
           cache-from: type=gha
           cache-to: type=gha, mode=max
-          working-directory: ./api
 
       - name: Login to Github Container Registry
         if: startsWith(github.ref, 'refs/tags')
@@ -61,4 +60,3 @@ jobs:
             ghcr.ghcr.io/squarefactory/heorot:${{steps.get_version.outputs.VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          working-directory: ./api

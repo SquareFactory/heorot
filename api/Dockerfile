@@ -7,7 +7,7 @@ ARG GID=999
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY api/package*.json ./
 RUN npm install
 
 COPY --chown=node:node . .

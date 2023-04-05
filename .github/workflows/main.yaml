@@ -57,6 +57,6 @@ jobs:
             VERSION=${{steps.get_version.outputs.VERSION }}
           tags: |
             ghcr.io/squarefactory/heorot:latest
-            ghcr.ghcr.io/squarefactory/heorot:${{steps.get_version.outputs.VERSION }}
+            ghcr.io/squarefactory/heorot:${{steps.get_version.outputs.VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

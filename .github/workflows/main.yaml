@@ -46,6 +46,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get the oci compatible version
+        if: startsWith(github.ref, 'refs/tags')
+        id: get_version
+        run: |
+          OCI_VERSION=$(echo ${GITHUB_REF#refs/*/} | sed 's/+/-/g' | sed -E 's/v(.*)/\1/g' )
+          echo "VERSION=${OCI_VERSION}" >> $GITHUB_OUTPUT
+
       - name: Build and export
         if: startsWith(github.ref, 'refs/tags')
         uses: docker/build-push-action@v4 
@@ -54,9 +61,9 @@ jobs:
           platforms: linux/amd64
           push: true
           build-args: |
-            VERSION=${{steps.get_version.outputs.VERSION }}
+            VERSION=${{ steps.get_version.outputs.VERSION }}
           tags: |
             ghcr.io/squarefactory/heorot:latest
-            ghcr.io/squarefactory/heorot:${{steps.get_version.outputs.VERSION }}
+            ghcr.io/squarefactory/heorot:${{ steps.get_version.outputs.VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

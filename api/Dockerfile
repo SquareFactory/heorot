@@ -7,5 +7,5 @@ WORKDIR /usr/src/app
 COPY api/package*.json ./
 RUN npm install
 
-COPY . .
+COPY api .
 CMD ["node", "server.js"]
